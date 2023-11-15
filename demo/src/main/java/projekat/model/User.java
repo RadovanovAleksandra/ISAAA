@@ -1,14 +1,17 @@
 package projekat.model;
 
+import projekat.payload.request.UpdateForm;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Builder
@@ -42,31 +45,45 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
+
+    // Inside your User class
+    public void updateForm(UpdateForm updateForm) {
+        this.firstname = updateForm.getFirstname();
+        this.lastname = updateForm.getLastname();
+        this.city = updateForm.getCity();
+        this.country = updateForm.getCountry();
+        this.phone = updateForm.getPhone();
+        this.loyaltyPoints = updateForm.getLoyaltyPoints();
+        this.penaltyPoints = updateForm.getPenaltyPoints();
+        this.occupation = updateForm.getOccupation();
+        this.organization = updateForm.getOrganization();
+    }
+
 
     @Override
-    public String getUsername() {
-        return null;
+    public String getUsername(){
+        return email;
     }
-
+    @Override
+    public String getPassword() {
+        return password;
+    }
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
-
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return !locked;
     }
-
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
-
     @Override
     public boolean isEnabled() {
-        return false;
+        return enabled;
     }
 }
