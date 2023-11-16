@@ -2,7 +2,7 @@ package projekat.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import projekat.model.User;
-import projekat.payload.request.UpdatePasswrodRequest
+import projekat.payload.request.UpdatePasswrodRequest;
 import projekat.payload.request.UpdateForm;
 import projekat.service.UserService;
 import lombok.RequiredArgsConstructor;
